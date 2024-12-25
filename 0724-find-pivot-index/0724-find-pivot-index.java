@@ -1,19 +1,22 @@
 import java.util.*;
 class Solution {
     public int pivotIndex(int[] nums) {
+        int rightSum = 0;
         for(int i=0; i<nums.length; i++) {
-            int leftSum = 0;
-            for(int left=0; left<i; left++) {
-                leftSum += nums[left];
-            }
-            int rightSum = 0;
-            for(int right=nums.length-1; right > i; right--) {
-                rightSum += nums[right];
-            }
-
-            if (leftSum == rightSum) {
+            rightSum += nums[i];
+        }
+        int leftSum = 0;
+        rightSum -= nums[0];
+        if (rightSum == 0) {
+            return 0;
+        }
+        for(int i=1; i<nums.length; i++) {
+            leftSum += nums[i-1];
+            rightSum -= nums[i];
+            if(leftSum == rightSum) {
                 return i;
             }
+            
         }
         return -1;
     }
